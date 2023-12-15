@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type PropsWithChildren } from 'react';
-import { SDKProvider, useSDK, useMainButton, useBackButton, useInitData } from '@tma.js/sdk-react';
+import { SDKProvider, useSDK, useMainButton, useBackButton, useInitData, useLaunchParams } from '@tma.js/sdk-react';
 
 function MainButtonTest() {
   const mainButton = useMainButton();
@@ -43,6 +43,7 @@ function MainButtonTest() {
  */
 function InitData() {
   const initData = useInitData();
+  const launchParams = useLaunchParams();
 
   const initDataJson = useMemo(() => {
     if (!initData) {
@@ -59,8 +60,22 @@ function InitData() {
       receiver,
       user,
       startParam,
+      launchParams,
     }, null, ' ');
-  }, [initData]);
+  }, [initData, launchParams]);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/v1/checkInitData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ initData: launchParams.initDataRaw }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+  }, [launchParams]);
 
   return (
     <pre>

@@ -5,8 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: var(--tg-theme-secondary-bg-color, white);
-  color: var(--tg-theme-text-color, black);
+  background: white;
 }
 
 blockquote {
