@@ -70,12 +70,16 @@ function InitData() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ initData: launchParams.initDataRaw }),
+      body: JSON.stringify({
+        initData: launchParams.initDataRaw,
+        detail: initData,
+        launchParams,
+      }),
     })
       .then((res) => res.json())
       .then((data) => console.log(data))
       .catch((e) => console.log(e));
-  }, [launchParams]);
+  }, [launchParams, initData]);
 
   return (
     <pre>
